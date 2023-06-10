@@ -4,16 +4,15 @@ package com.visa.VisaServices_SpringBoot.models;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 
 @Entity
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 public class VisaModel {
     @Id
     @GeneratedValue
@@ -31,7 +30,7 @@ public class VisaModel {
 
     private String holderFullNameInArabic;
     private String holderFullName;
-    private int holderMoiReference;
+    private int holderMOIReference;
     private String holderNationality;
     private LocalDate holderDateOfIssue;
     private String holderGender;
@@ -44,8 +43,8 @@ public class VisaModel {
     private LocalDate holderExpiryDate;
 
     private String employerFullName;
-    private String employerFullNameInArabic;
-    private int employerMoiReference;
+    private String employerFullNameinArabic;
+    private int employerMOIReference;
     private String employerMobileNumber;
 
     private boolean active;
