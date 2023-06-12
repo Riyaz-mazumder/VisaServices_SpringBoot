@@ -41,4 +41,11 @@ public class VisaController {
         visaService.deleteVisa(id);
     }
 
+
+
+    @GetMapping("visa/{holderPassportNumber}/{holderDateOfBirth}/{holderNationality}")
+    public List<VisaModel> searchVis(@PathVariable String holderPassportNumber, @PathVariable String holderDateOfBirth, @PathVariable String holderNationality){
+        return visaService.searchVisa_(holderPassportNumber, holderDateOfBirth, holderNationality);
+    }
+
 }

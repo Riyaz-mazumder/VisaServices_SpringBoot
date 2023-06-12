@@ -29,4 +29,8 @@ public class VisaService {
     public void deleteVisa(Long id){
         visaRepo.deleteById(id);
     }
+
+    public List<VisaModel> searchVisa_(String holderPassportNo, String holderDateOfBirth, String holderNationality){
+        return visaRepo.searchVisa(holderPassportNo, holderDateOfBirth, holderNationality);
+    }
 }
