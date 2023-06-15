@@ -2,10 +2,12 @@ package com.visa.VisaServices_SpringBoot.controllers;
 
 
 import com.visa.VisaServices_SpringBoot.models.VisaModel;
+import com.visa.VisaServices_SpringBoot.service.QRCodeService;
 import com.visa.VisaServices_SpringBoot.service.VisaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -14,6 +16,9 @@ public class VisaController {
 
     @Autowired
     private VisaService visaService;
+
+    @Autowired
+    private QRCodeService qrCodeService;
 
 
     @GetMapping("visa")
@@ -27,7 +32,7 @@ public class VisaController {
     }
 
     @PostMapping("visa")
-    public void saveVisa(@RequestBody VisaModel visaModel){
+    public void saveVisa(@RequestBody VisaModel visaModel) {
         visaService.saveVisa(visaModel);
     }
 
@@ -47,5 +52,12 @@ public class VisaController {
     public List<VisaModel> searchVis(@PathVariable String holderPassportNumber, @PathVariable String holderDateOfBirth, @PathVariable String holderNationality){
         return visaService.searchVisa_(holderPassportNumber, holderDateOfBirth, holderNationality);
     }
+
+
+    @GetMapping("qrCode/{path}")
+    public byte[] getQrCode(@PathVariable String path) throws Exception{
+        return qrCodeService.generateQRCodeWithLogo(path, "https://live.staticflickr.com/65535/52974974959_4726f09725_m.jpg");
+    }
+
 
 }
