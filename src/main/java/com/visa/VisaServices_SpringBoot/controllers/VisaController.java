@@ -7,8 +7,21 @@ import com.visa.VisaServices_SpringBoot.service.VisaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
+
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
+
 import java.util.List;
+
+
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+
 
 @RestController
 @RequestMapping("api/v1/")
@@ -54,10 +67,46 @@ public class VisaController {
     }
 
 
-    @GetMapping("qrCode/{path}")
-    public byte[] getQrCode(@PathVariable String path) throws Exception{
-        return qrCodeService.generateQRCodeWithLogo(path, "https://live.staticflickr.com/65535/52974974959_4726f09725_m.jpg");
+    @GetMapping("/qrCode/{path}")
+    public ResponseEntity<byte[]> getQrCode(@PathVariable String path) {
+        try {
+            byte[] imageBytes = qrCodeService.generateQRCodeWithLogo("http://localhost:4200/eVisa/verify/" + path, "https://live.staticflickr.com/65535/52974974959_4726f09725_m.jpg");
+
+            // Set the appropriate HTTP headers for the response
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.IMAGE_PNG);
+
+            // Return the ResponseEntity with the image byte[] and headers
+            return new ResponseEntity<>(imageBytes, headers, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
+//    @GetMapping("/qrCode/{path}")
+//    public ResponseEntity<Resource> getQrCode(@PathVariable String path) {
+//        try {
+//            byte[] imageBytes = qrCodeService.generateQRCodeWithLogo("http://localhost:4200/eVisa/verify/" + path, "https://live.staticflickr.com/65535/52974974959_4726f09725_m.jpg");
+//
+//            // Convert byte[] to an ArrayBuffer
+//            ByteArrayResource resource = new ByteArrayResource(imageBytes);
+//
+//            // Set the appropriate HTTP headers for the response
+//            HttpHeaders headers = new HttpHeaders();
+//            headers.setContentType(MediaType.IMAGE_PNG);
+//            headers.setContentLength(imageBytes.length);
+//            headers.setContentDispositionFormData("attachment", "image.png");
+//
+//            // Return the ResponseEntity with the resource and headers
+//            return new ResponseEntity<>(resource, headers, HttpStatus.OK);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
 
-}
+
+//    }
+
+
+    }
