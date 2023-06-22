@@ -5,8 +5,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @AllArgsConstructor
@@ -48,6 +50,9 @@ public class VisaModel {
     private String employerMobileNumber;
 
     private boolean active;
+
+    @CreationTimestamp
+    private LocalDateTime createdDateTime;
 
 
 }
