@@ -32,7 +32,7 @@ public class VisaModel {
 
     private String holderFullNameInArabic;
     private String holderFullName;
-    private int holderMOIReference;
+    private String holderMOIReference;
     private String holderNationality;
     private LocalDate holderDateOfIssue;
     private String holderGender;
@@ -46,13 +46,15 @@ public class VisaModel {
 
     private String employerFullName;
     private String employerFullNameinArabic;
-    private int employerMOIReference;
+    private String employerMOIReference;
     private String employerMobileNumber;
 
     private boolean active;
 
     @CreationTimestamp
     private LocalDateTime createdDateTime;
+
+    private String message;
 
 
 }

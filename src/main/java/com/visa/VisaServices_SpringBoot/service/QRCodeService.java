@@ -44,16 +44,25 @@ public class QRCodeService {
         BufferedImage qrCodeImage = new BufferedImage(qrCodeSize, qrCodeSize, BufferedImage.TYPE_INT_RGB);
         qrCodeImage.createGraphics();
 
-        // Set QR code color
-        Color qrCodeColor = new Color(46, 83, 150); // Custom color (RGB values: 46, 83, 150)
 
-        // Render the QR code
+// Set QR code colors
+        Color qrCodeColor = new Color(46, 83, 150); // Custom color (RGB values: 46, 83, 150)
+        Color qrCodeBackgroundColor = new Color(102, 119, 151, 216); // Custom background color (RGBA values: 102, 119, 151, 216)
+        Color qrCodeOtherColor = new Color(102, 119, 151, 216); // Custom color for other pixels (RGBA values: 102, 119, 151, 216)
+
+// Render the QR code
         for (int x = 0; x < qrCodeSize; x++) {
             for (int y = 0; y < qrCodeSize; y++) {
-                int pixelColor = bitMatrix.get(x, y) ? qrCodeColor.getRGB() : Color.WHITE.getRGB();
-                qrCodeImage.setRGB(x, y, pixelColor);
+                if ((x >= 3 && x < 6) && (y >= 3 && y < 6)) {
+                    qrCodeImage.setRGB(x, y, qrCodeColor.getRGB()); // Set custom color for the big dots
+                } else {
+                    int pixelColor = bitMatrix.get(x, y) ? qrCodeOtherColor.getRGB() : qrCodeBackgroundColor.getRGB();
+                    qrCodeImage.setRGB(x, y, pixelColor);
+                }
             }
         }
+
+
 
         // Load the logo image from the provided URL
         BufferedImage logoImage = ImageIO.read(new URL(logoUrl));
