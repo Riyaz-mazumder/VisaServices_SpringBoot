@@ -24,9 +24,8 @@ public class UploadModel {
     private String holderPassportNo;
     private String holderDateOfBirth;
     private String holderNationality;
+    private Long fileId;
 
-    @Lob
-    private byte[] file;
 
     @CreationTimestamp
     private LocalDateTime createdDateTime;
